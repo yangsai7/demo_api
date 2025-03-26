@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package api;
+
+import "google/api/annotations.proto";
+
+
+option go_package = "codeup.aliyun.com/tuotu/shellverse_api/api;api";
+
+
+service User {
+	rpc Login (UserLoginRequest) returns (UserLoginResponse) {
+		option (google.api.http) = {
+            post: "/shellverse-service/user/login",
+			body: "*"
+        };
+	}
+}
+
+message UserLoginRequest {
+	message UserInfo {
+		string nickname = 1; //@gotags: binding:"required"
+		string avatar_url = 2; //@gotags: binding:"required"
+	}
+	string code = 1; //@gotags: binding:"required"
+	UserInfo userinfo = 2; //@gotags: binding:"required"
+}
+
+message UserLoginResponse {
+	message UserInfo {
+		string nickname = 1;
+		string avatar_url = 2;
+	}
+	string token = 1;
+	UserInfo userinfo = 2;
+}
